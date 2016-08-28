@@ -1,0 +1,40 @@
+There're several different approaches to JavaI/O. There's also Java nio package introduced 
+in Java7.
+
+IO can either be performed using 1) bytes or 2) character data and the methods used are pretty much the same,
+it's the actual class what will vary. 
+
+1) binary data involves writing bytes that will not look very meaningful if you open the file
+in a normal text editor.  
+
+2) when reading and writing character data, the data is in a readable format and you can open 
+the resulting files that have been read or written in a text editor and you can probably make
+sense of it. 
+
+Which one to uses, bytes or character data? It really depends on what the data represents, if you're 
+creating a report file to be imported  into a spreadsheet you'd probably choose a character string
+; and similarly character should probably be the correct type for writing XML or JSON data, but once
+storing your program variables or classes it may be more appropriate to use binary format it just 
+does depend what you're trying to achieve. 
+
+Another distinction that needs to be made between serial or 1) sequential files and 2) random access files. 
+
+1) sequential access : can be thought of as a stream of data that arrives at your program or is sent out
+from it in a defined order with each piece of data following in sequence. 
+
+2) random access : it only applies to files and allows you to jump about the file or within the file
+retrieving or overriding any data in any in any location within the file you choose. This is more like
+how a data base will program will work, with some sort of index showing you where a particular record
+is within the file so that it can be read without having read through thousands of the earlier records
+that preceded it.
+ 
+A comparison between sequential data and a stream is made. In fact Java uses various stream objects to deal
+with it.
+
+
+ 
+
+
+
+  
+
