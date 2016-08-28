@@ -31,7 +31,43 @@ that preceded it.
 A comparison between sequential data and a stream is made. In fact Java uses various stream objects to deal
 with it.
 
+The action to close the FileWriter is very important, and failing to close steams can really cause problems
+such as resource leaks and locked files. If an output file is not closed then the data can become corrupted
+or the file remain locked, causing that no other process is able to to use it. This need is intended to be 
+enforces since Java7.
 
+NOTE : in order to guarantee that FileWriters are closed (even if for instance an exception has rose),
+we use the finally block, actually any "cleaning code", i.e, any code that needs to be executed 
+not matter what happened before should go inside that block. This code will always be executed unless
+the JVM crashes which is very unlikely.
+
+NOTE : a try block must have a catch or finally block at least. It doesn't need to have both but
+it must at least have one or the other. Actually in I/O operations is quite common to only have 
+try/finally.  
+
+Up until Java7 the code in our Main class (current commit) was pretty much the standard template for writing
+data to a stream and reading from streams. But in Java 7 it was introduced an improvement that actually makes
+the code quite a bit neater. 
+
+NOTE : there's quite a few ways to break I/O code but in the 3 more popular OS we could set the file to
+read only, or in Linux/OSX we could change ownership to root, we can also specify an invalid file path;
+attempting to create a file on disk drive doesn't exists in Windows, etc...
+
+NOTE : Java insists that we handle checked Exceptions but there're 2 ways to handle them (doing nothing
+wasn't an option):
+1) catching them
+2) throwing them up back in the call-stack
+
+Obviously when we're in a main method, as it's the entry point of a program we won't have any calling code that
+would handle the exception. But the idea of throwing the exception instead of catching it is very useful. Java
+documentation uses the term "catch" or "specify" for dealing with checked exceptions. Meaning that the method
+must either catch the exception or specify that it throws it. Sometimes it makes more sense to specify (throw).
+
+ 
+
+
+
+ 
  
 
 
