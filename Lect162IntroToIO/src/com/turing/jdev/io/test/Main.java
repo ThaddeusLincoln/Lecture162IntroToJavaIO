@@ -13,7 +13,6 @@ public class Main {
 			 locFile = new FileWriter("locations.txt");
 		
 		 }finally{
-
 			if(locFile != null){
 				locFile.close();
 			}
