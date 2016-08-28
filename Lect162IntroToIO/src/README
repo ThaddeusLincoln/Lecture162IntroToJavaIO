@@ -63,6 +63,9 @@ would handle the exception. But the idea of throwing the exception instead of ca
 documentation uses the term "catch" or "specify" for dealing with checked exceptions. Meaning that the method
 must either catch the exception or specify that it throws it. Sometimes it makes more sense to specify (throw).
 
+TIP : throwing exceptions could be a very useful technique to test. The code must be removed the pushed into
+production.
+
  
 
 
