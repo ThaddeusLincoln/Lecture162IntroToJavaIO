@@ -75,12 +75,73 @@ whereas this method ensures that first error is the one thrown back and that's h
 that we want to be working with. It's a subtle difference but is something to have into consideration if we're
 converting existing code to use try-with-resources. 
 
+The try-with-resources Statement========================================================================
 
+The try-with-resources statement is a try statement that declares one or more resources. 
+A resource is an object that must be closed after the program is finished with it. 
+The try-with-resources statement ensures that each resource is closed at the end of the statement. 
+Any object that implements java.lang.AutoCloseable, which includes all objects which 
+implement java.io.Closeable, can be used as a resource.
 
- 
- 
+The following example reads the first line from a file. It uses an instance of BufferedReader 
+to read data from the file. BufferedReader is a resource that must be closed after 
+the program is finished with it:
 
+static String readFirstLineFromFile(String path) throws IOException {
+    try (BufferedReader br =
+                   new BufferedReader(new FileReader(path))) {
+        return br.readLine();
+    }
+}
 
+Prior to Java SE 7, you can use a finally block to ensure that a resource is closed regardless 
+of whether the try statement completes normally or abruptly. 
 
-  
+NOTE : we could add a finally block to try-with-resources if that's what we wanted to do. 
+But don't try to close the resources in it, because that's unnecessary and closing some 
+resources when they are open can cause and error, so it's better to leave it to the try 
+resources block to do for you automatically.
+
+NOTE : try-with-resource allows more than one resource to be specified. 
+
+NOTE: we Scanner's object close() method is called, it also closes any stream that it was using, 
+although is probably more accurate to use the term, "readable" instead of stream, 
+always that the steam object implements the closable interface. FileReader for instance, 
+implements Closable.
+
+BUFFEREDREADER ================================================
+
+A BufferReader reads text from the input stream and buffers the characters into a character array. 
+We can use a FileReader and use it as InputStream for the BufferedReader to use. 
+
+NOTE : reading chunk of data from a stream such as file is more efficient than reading 
+just a few characters at a time and the reason for that is that things like the overhead 
+of seeking to the correct track and sector on your disk drive are are significant. 
+So it takes a while to find the correct place on the disk drive to read from and if you have 
+to do that many times because only a few bytes have been read at a time then the seek times 
+for this really do adds up. Consequently BufferedReaders can be a lot more faster.
+
+We can specify the size of the Buffer but the default is 8K Bytes, which is enough for most purposes. 
+While what we want to read is inferior to the buffer size it will be possible to read 
+it in a single time.
+
+Most of the terminals in the mid 70s (Colossal Cave Adventure is from 1976) they couldn't 
+display lower-case characters.
+
+When we have code in our main() method we can just specify that the method throws the 
+Exception and remove the catch block, now that approach can't be taken with a static 
+initialization block, and the reason is that the static initialization block 
+they're actually executed when the classes are loaded so, in other words there is no way 
+for any of that code to catch any exception that are thrown.
+
+We can throw uncheck exceptions in a initialization block, but not checked ones. 
+Unchecked exceptions don't have to be caught but checked exceptions must be. 
+
+BufferedWriter : the concept is the same as for BufferedReader, the FilerWriter 
+puts the data into the buffered and the data is only written to the disk when the buffer is full. 
+Once again this prevents from writing small amounts of data to the disk which is very efficient, 
+because the disk drive is generally speaking much slower that the computer processor. 
+So our applications are going to be slow down waiting for that disk drive to write data. 
+In summary using BufferedWritter the data is written in size-able chunks rather than sort 
+of a character at a time which is faster. 
 
