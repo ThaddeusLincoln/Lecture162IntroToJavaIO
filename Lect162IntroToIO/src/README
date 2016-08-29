@@ -145,3 +145,50 @@ So our applications are going to be slow down waiting for that disk drive to wri
 In summary using BufferedWritter the data is written in size-able chunks rather than sort 
 of a character at a time which is faster. 
 
+Bytes Streams or Binary Data =============================================================
+
+One advantage of using binaryData or byteStream is that we don't have to pass the data into the various
+data types that were stored and the reason for that is that  a byteStream itself can be used to
+read and write any of the Java primitive data types such as double, int, byte, etc. Also it can handle 
+String variables, this is a special cause Strings are not a primitive data type, which is pretty cool.
+
+Working with ByteStreams follow the same patterns, the difference lays in that we're going to use
+FileInputStream and FileOutputStream classes instead of file readers/writers.
+
+We're going to continue buffering the data with BufferenInputStream and BufferedOutputStream class. Although, 
+we could work directly with the byteStreams, we have to consider that they only handle bytes, which would be
+either writing either a single byte or a specified number of bytes. There are occasions when that's probably
+all you'll need but generally speaking when storing and retrieving data you probably want to work with Java types.
+
+The Java I/O package gladly for us makes it easy by providing the DataInputStream and DataOutputStream classes
+and they provide methods such as readInt() which reads an integer from the stream, it does this by reading 4
+bytes from the stream and building up the integer from those 4 bytes.   
+
+When writing with a ByteStream we'll often use the extension *.dat, because it will no longer be a text file,
+and is also important to make clear that this isn't a regular text file. So we wouldn't want to call it *.txt,
+which would make people believe that they can open it with a textEditor when what is really contained inside
+is binary data.
+
+The DataInputStream does itself the parsing of int or Strings we don't have to worry about that, the 
+DataInputStream takes care of build primitive types such as int and double from the bytes on the file. 
+
+EOF Exception : is thrown by the DataStreamReaders throw an IO Exception when there's no more data
+to be read form the stream. EOF Exception is a subclass of Exception. And we really should be checking 
+for that as a way to terminate the while loop rather than using the IOException. So a good way of doing it
+would be putting this code inside a try catch block.
+
+boolean eof = false;
+while(!eof){
+try{
+
+}catch(EOFException){....}
+
+} 
+ 
+Working with ByteStreams is no more complicated than reading and writing character streams, but we do
+have to know the format of the data that we're reading. In our example, as we wrote the original file we knew
+when to use readInt or readUTF (by using those in the same order as we used they opposites in the write methods).
+So provided that we know the format of the data reading from ByteStream is straightforward. Something similar 
+happens with a text file, but at least we can open it and see the format of the data. 
+
+ 
